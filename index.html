@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🌱 DATA → THINK → DECIDE → ACT → REFLECT</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a2e;
+      --card2:#0d1730;
+      --text:#eaf0ff;
+      --muted:#b9c6ea;
+      --line:rgba(255,255,255,.10);
+      --accent:#7cf7a5;
+      --accent2:#72a7ff;
+      --warn:#ffcc66;
+      --danger:#ff6b6b;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Hebrew", "Helvetica Neue", sans-serif;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(114,167,255,.18), transparent 60%),
+                  radial-gradient(900px 500px at 10% 0%, rgba(124,247,165,.14), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{ color:inherit; text-decoration:underline; text-decoration-color:rgba(255,255,255,.35); }
+    header{
+      padding: 28px 18px 18px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+    .titleCard{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .titleRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    h1{
+      margin:8px 0 8px;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      color: var(--muted);
+      margin: 0;
+      font-size: 15px;
+    }
+    .miniCard{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .miniCard h3{ margin:0 0 10px; font-size: 16px; }
+    .miniCard ul{ margin:0; padding-right: 18px; color: var(--muted); }
+    main{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 18px 40px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .card h2{
+      margin:0 0 8px;
+      font-size: 18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .stepPill{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+    .hint{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      margin-top: 10px;
+    }
+    label{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      font-size: 13px;
+      color: var(--muted);
+      min-width: 160px;
+      flex: 1;
+    }
+    input, select, textarea{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+      font-size: 14px;
+    }
+    textarea{ min-height: 110px; resize: vertical; }
+    button{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(124,247,165,.24), rgba(124,247,165,.12));
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 600;
+      transition: transform .06s ease, filter .2s ease;
+      white-space: nowrap;
+    }
+    button.secondary{
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      font-weight: 600;
+      color: var(--muted);
+    }
+    button:active{ transform: translateY(1px); }
+    .kpi{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 600px){
+      .kpi{ grid-template-columns: 1fr; }
+    }
+    .kpi .box{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,.03);
+    }
+    .kpi .box .label{ color: var(--muted); font-size: 12px; }
+    .kpi .box .value{ font-family: var(--mono); font-size: 16px; margin-top: 6px; }
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-size: 13px;
+      margin: 8px 6px 0 0;
+    }
+    .tag strong{ color: var(--text); }
+    .callout{
+      margin-top: 10px;
+      border: 1px dashed rgba(255,255,255,.22);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(114,167,255,.08);
+      color: var(--muted);
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 14px;
+      border:1px solid var(--line);
+    }
+    th, td{
+      padding: 10px 10px;
+      border-bottom:1px solid var(--line);
+      text-align: right;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th{
+      color: var(--muted);
+      background: rgba(255,255,255,.04);
+      font-weight: 600;
+    }
+    tr:last-child td{ border-bottom:none; }
+    .footer{
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 13px;
+      opacity:.9;
+    }
+    .pillOk{ color: var(--accent); }
+    .pillWarn{ color: var(--warn); }
+    .pillDanger{ color: var(--danger); }
+    .logItem{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      margin-top: 10px;
+      background: rgba(255,255,255,.03);
+    }
+    .logItem .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .logItem pre{
+      margin:0;
+      padding: 10px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      font-family: var(--mono);
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="hero">
+    <section class="titleCard">
+      <div class="titleRow">
+        <span class="badge">🌱 למידה מבוססת נתונים</span>
+        <span class="badge">🤖 AI הוא תהליך חשיבה, לא כפתור</span>
+      </div>
+      <h1>DATA → THINK → DECIDE → ACT → REFLECT</h1>
+      <p class="subtitle">
+        אתר קצר לתלמידים. מתחילים מלתאר נתונים, ממשיכים לפרש, מקבלים החלטה, מבצעים, ואז בודקים אם זה עבד.
+      </p>
+      <p class="hint">
+        המטרה: שהתלמידים לא יגידו “המחשב אמר להשקות”, אלא “לפי הנתונים החלטנו להשקות מעט”.
+      </p>
+    </section>
+
+    <aside class="miniCard">
+      <h3>איך משתמשים באתר בשיעור?</h3>
+      <ul>
+        <li>מכניסים ערכים לדוגמה (לחות, אור, טמפרטורה).</li>
+        <li>עוברים שלב שלב לפי הכרטיסיות.</li>
+        <li>כותבים החלטה ביומן ובודקים תוצאה בהמשך.</li>
+      </ul>
+    </aside>
+  </div>
+</header>
+
+<main>
+  <section class="card" id="sim">
+    <h2>סימולטור נתונים <span class="stepPill">התחלה</span></h2>
+    <p class="hint">הכניסו נתונים כאילו הגיעו מ-Google Sheet או מסך ESP. עדיין לא מחליטים מה עושים — רק מתארים.</p>
+
+    <div class="row">
+      <label>
+        Moisture (לחות בקרקע)
+        <input id="moisture" type="number" value="2800" min="0" step="10" />
+      </label>
+      <label>
+        Light (אור)
+        <select id="light">
+          <option value="Low">Low / מעט אור</option>
+          <option value="Medium">Medium / בינוני</option>
+          <option value="High">High / הרבה אור</option>
+        </select>
+      </label>
+      <label>
+        Temp (טמפרטורה °C)
+        <input id="temp" type="number" value="30" min="-10" step="0.5" />
+      </label>
+      <button id="analyzeBtn">נתחו לפי המודל</button>
+      <button class="secondary" id="resetBtn" type="button">איפוס דוגמה</button>
+    </div>
+
+    <div class="kpi" aria-live="polite">
+      <div class="box">
+        <div class="label">תיאור (DATA)</div>
+        <div class="value" id="kpiData">—</div>
+      </div>
+      <div class="box">
+        <div class="label">פרשנות (THINK)</div>
+        <div class="value" id="kpiThink">—</div>
+      </div>
+      <div class="box">
+        <div class="label">המלצה (ללא אוטומציה)</div>
+        <div class="value" id="kpiDecide">—</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>כלל חשוב:</strong> המערכת נותנת נתונים. בני אדם שואלים שאלות, משווים לטווחים, ומקבלים החלטה.
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card" id="step1">
+      <h2>שלב 1: DATA <span class="stepPill">מה אנחנו רואים?</span></h2>
+      <p class="hint">
+        כאן מתארים בלי “מה עושים”. בונים שפה: יבש/רטוב, חם/קר, הרבה אור/מעט אור.
+      </p>
+      <div id="dataWords"></div>
+    </section>
+
+    <section class="card" id="step2">
+      <h2>שלב 2: THINK <span class="stepPill">מה זה אומר?</span></h2>
+      <p class="hint">
+        משווים לטבלת טווחים, שואלים: האם 2800 זה יבש או רטוב? האם היום חם יותר מאתמול?
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>טווח לחות (Moisture)</th>
+            <th>פירוש</th>
+            <th>דוגמת שאלה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pillDanger">מעל 2500</span></td>
+            <td>יבש</td>
+            <td>מה יקרה אם נחכה עוד שעה בלי להשקות?</td>
+          </tr>
+          <tr>
+            <td><span class="pillWarn">1500–2500</span></td>
+            <td>ביניים</td>
+            <td>האם כדאי לבדוק שוב בעוד 30 דקות?</td>
+          </tr>
+          <tr>
+            <td><span class="pillOk">מתחת 1500</span></td>
+            <td>רטוב</td>
+            <td>האם השקינו יותר מדי בפעם הקודמת?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="hint" id="thinkText">—</p>
+    </section>
+
+    <section class="card" id="step3">
+      <h2>שלב 3: DECIDE <span class="stepPill">מה נכון לעשות?</span></h2>
+      <p class="hint">
+        לא “המחשב אמר”. אלא החלטה עם נימוק: “לפי הנתונים, כדאי להשקות מעט”.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>לחות</th>
+            <th>המלצה</th>
+            <th>איך אומרים את זה נכון?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>גבוהה (רטוב)</td>
+            <td>לא להשקות</td>
+            <td>“לפי הנתונים, הקרקע רטובה, אז החלטנו לא להשקות.”</td>
+          </tr>
+          <tr>
+            <td>בינונית</td>
+            <td>לבדוק</td>
+            <td>“לפי הנתונים, זה באמצע. החלטנו למדוד שוב לפני פעולה.”</td>
+          </tr>
+          <tr>
+            <td>נמוכה (יבש)</td>
+            <td>להשקות מעט</td>
+            <td>“לפי הנתונים, הקרקע יבשה, אז החלטנו להשקות מעט.”</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row">
+        <label>
+          החלטה (משפט אחד)
+          <input id="decisionInput" placeholder="לפי הנתונים, החלטנו..." />
+        </label>
+        <label>
+          למה? (נימוק קצר)
+          <input id="whyInput" placeholder="כי Moisture היה..." />
+        </label>
+      </div>
+    </section>
+
+    <section class="card" id="step4">
+      <h2>שלב 4: ACT <span class="stepPill">ביצוע</span></h2>
+      <p class="hint">הפעולה יכולה להיות: לחיצה על כפתור, הפעלת משאבה, או החלטה לא להשקות.</p>
+
+      <div class="row">
+        <label>
+          מה ביצענו בפועל?
+          <select id="actSelect">
+            <option value="השקינו מעט">השקינו מעט</option>
+            <option value="השקינו הרבה">השקינו הרבה</option>
+            <option value="לא השקינו">לא השקינו</option>
+            <option value="בדקו שוב (ללא פעולה)">בדקו שוב (ללא פעולה)</option>
+          </select>
+        </label>
+        <button class="secondary" id="suggestBtn" type="button">הציעו ניסוח החלטה אוטומטי (רק טקסט)</button>
+      </div>
+
+      <p class="hint" id="actHint">—</p>
+    </section>
+
+    <section class="card" id="step5">
+      <h2>שלב 5: REFLECT <span class="stepPill">בדיקה ולמידה</span></h2>
+      <p class="hint">
+        אחרי שעה או יום: מה קרה לערכים? האם ההחלטה שיפרה את מצב הצמח? האם השקינו יותר מדי?
+      </p>
+
+      <div class="row">
+        <label>
+          תוצאה (מה ראינו אחרי זמן?)
+          <textarea id="resultInput" placeholder="לדוגמה: אחרי שעה הלחות ירדה/עלתה, הצמח נראה..."></textarea>
+        </label>
+      </div>
+
+      <div class="row">
+        <button id="saveLogBtn" type="button">שמרו ביומן החלטות</button>
+        <button class="secondary" id="clearLogBtn" type="button">נקה יומן</button>
+      </div>
+
+      <div id="log"></div>
+    </section>
+  </div>
+
+  <section class="card" id="questions">
+    <h2>🤖 “לוח שאלות” ליד המסך <span class="stepPill">תקשורת עם המערכת</span></h2>
+    <p class="hint">המערכת לא “מדברת”. התלמידים “מדברים איתה” דרך שאלות.</p>
+    <div>
+      <span class="tag"><strong>שאלה:</strong> האם צריך להשקות עכשיו?</span>
+      <span class="tag"><strong>שאלה:</strong> כמה מים נחסכו השבוע?</span>
+      <span class="tag"><strong>שאלה:</strong> מה יקרה אם נחכה?</span>
+      <span class="tag"><strong>שאלה:</strong> מה היה הערך בפעם הקודמת שהשקינו?</span>
+      <span class="tag"><strong>שאלה:</strong> האם היום חם יותר מאתמול?</span>
+    </div>
+  </section>
+
+  <p class="footer">
+    טיפ למורה: אפשר להתחיל כל שיעור עם 2 דקות “DATA בלבד” (תיאור), ואז 3 דקות “THINK” (השוואה לטווחים), ורק אחר כך החלטה.
+  </p>
+</main>
+
+<script>
+  const els = {
+    moisture: document.getElementById('moisture'),
+    light: document.getElementById('light'),
+    temp: document.getElementById('temp'),
+    analyzeBtn: document.getElementById('analyzeBtn'),
+    resetBtn: document.getElementById('resetBtn'),
+
+    kpiData: document.getElementById('kpiData'),
+    kpiThink: document.getElementById('kpiThink'),
+    kpiDecide: document.getElementById('kpiDecide'),
+
+    dataWords: document.getElementById('dataWords'),
+    thinkText: document.getElementById('thinkText'),
+
+    decisionInput: document.getElementById('decisionInput'),
+    whyInput: document.getElementById('whyInput'),
+
+    actSelect: document.getElementById('actSelect'),
+    actHint: document.getElementById('actHint'),
+    suggestBtn: document.getElementById('suggestBtn'),
+
+    resultInput: document.getElementById('resultInput'),
+    saveLogBtn: document.getElementById('saveLogBtn'),
+    clearLogBtn: document.getElementById('clearLogBtn'),
+    log: document.getElementById('log'),
+  };
+
+  function moistureBand(m){
+    if (m > 2500) return { band: 'יבש', rec: 'להשקות מעט', tone: 'pillDanger' };
+    if (m >= 1500) return { band: 'ביניים', rec: 'לבדוק', tone: 'pillWarn' };
+    return { band: 'רטוב', rec: 'לא להשקות', tone: 'pillOk' };
+  }
+
+  function tempWord(t){
+    if (t >= 30) return { word: 'חם', cls: 'pillWarn' };
+    if (t <= 15) return { word: 'קר', cls: 'pillOk' };
+    return { word: 'נעים', cls: 'pillOk' };
+  }
+
+  function lightWord(l){
+    if (l === 'High') return 'הרבה אור';
+    if (l === 'Medium') return 'אור בינוני';
+    return 'מעט אור';
+  }
+
+  function renderDataWords(m, l, t){
+    const mb = moistureBand(m).band;
+    const tw = tempWord(t).word;
+    const lw = lightWord(l);
+
+    els.dataWords.innerHTML = `
+      <span class="tag"><strong>לחות:</strong> ${m} (${mb})</span>
+      <span class="tag"><strong>אור:</strong> ${l} (${lw})</span>
+      <span class="tag"><strong>טמפ׳:</strong> ${t}°C (${tw})</span>
+      <p class="hint">בשלב DATA אומרים רק מה רואים, בלי פתרון.</p>
+    `;
+    els.kpiData.textContent = `Moisture ${m} | Light ${l} | Temp ${t}°C`;
+  }
+
+  function renderThink(m, l, t){
+    const mb = moistureBand(m);
+    const tw = tempWord(t);
+    const q = [
+      `האם ${m} נחשב “${mb.band}” לפי הטווחים?`,
+      `איך הטמפרטורה (${t}°C) משפיעה על קצב ייבוש הקרקע?`,
+      `אם יש ${lightWord(l)}, האם זה משנה כמה מהר הצמח שותה?`,
+    ];
+    els.thinkText.textContent = q.join(' ');
+    els.kpiThink.textContent = `${mb.band} | ${lightWord(l)} | ${tempWord(t).word}`;
+    return mb;
+  }
+
+  function renderDecide(mb){
+    els.kpiDecide.textContent = mb.rec;
+
+    // אם המשתמש לא כתב החלטה עדיין, נציע ניסוח בסיסי.
+    if (!els.decisionInput.value.trim()){
+      if (mb.rec === 'להשקות מעט'){
+        els.decisionInput.value = 'לפי הנתונים, החלטנו להשקות מעט.';
+      } else if (mb.rec === 'לא להשקות'){
+        els.decisionInput.value = 'לפי הנתונים, החלטנו לא להשקות.';
+      } else {
+        els.decisionInput.value = 'לפי הנתונים, החלטנו לבדוק שוב לפני פעולה.';
+      }
+    }
+    if (!els.whyInput.value.trim()){
+      els.whyInput.value = `כי ערך הלחות היה ${els.moisture.value} וזה מצביע על מצב “${mb.band}”.`;
+    }
+  }
+
+  function renderActHint(){
+    els.actHint.textContent = `ביצוע שנבחר: ${els.actSelect.value}. זכרו: ביצוע הוא פעולה, לא “המלצה”.`;
+  }
+
+  function analyze(){
+    const m = Number(els.moisture.value);
+    const l = els.light.value;
+    const t = Number(els.temp.value);
+
+    renderDataWords(m, l, t);
+    const mb = renderThink(m, l, t);
+    renderDecide(mb);
+    renderActHint();
+  }
+
+  function loadLog(){
+    try {
+      const raw = localStorage.getItem('dtddar_log');
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveLog(items){
+    localStorage.setItem('dtddar_log', JSON.stringify(items));
+  }
+
+  function renderLog(){
+    const items = loadLog();
+    if (!items.length){
+      els.log.innerHTML = `<p class="hint">היומן ריק. שמרו החלטה ראשונה כדי להתחיל.</p>`;
+      return;
+    }
+    els.log.innerHTML = items.map((it, idx) => {
+      return `
+        <div class="logItem">
+          <div class="meta">
+            <span>#${idx + 1}</span>
+            <span>🕒 ${it.time}</span>
+            <span>🌱 Moisture ${it.moisture}</span>
+            <span>💡 ${it.light}</span>
+            <span>🌡️ ${it.temp}°C</span>
+          </div>
+          <pre>DATA: Moisture=${it.moisture}, Light=${it.light}, Temp=${it.temp}°C
+THINK: ${it.think}
+DECIDE: ${it.decision}
+WHY: ${it.why}
+ACT: ${it.act}
+REFLECT: ${it.result || '— (טרם נכתב)'} </pre>
+        </div>
+      `;
+    }).join('');
+  }
+
+  els.analyzeBtn.addEventListener('click', analyze);
+  els.resetBtn.addEventListener('click', () => {
+    els.moisture.value = 2800;
+    els.light.value = 'Low';
+    els.temp.value = 30;
+    els.decisionInput.value = '';
+    els.whyInput.value = '';
+    els.resultInput.value = '';
+    analyze();
+  });
+
+  els.actSelect.addEventListener('change', renderActHint);
+
+  els.suggestBtn.addEventListener('click', () => {
+    const mb = moistureBand(Number(els.moisture.value));
+    const act = els.actSelect.value;
+    els.decisionInput.value =
+      `לפי הנתונים (${els.moisture.value}, ${els.light.value}, ${els.temp.value}°C) החלטנו: ${mb.rec}.`;
+    els.whyInput.value =
+      `כי לפי טבלת הטווחים, מצב הלחות הוא “${mb.band}”. ביצענו: ${act}.`;
+  });
+
+  els.saveLogBtn.addEventListener('click', () => {
+    const m = Number(els.moisture.value);
+    const l = els.light.value;
+    const t = Number(els.temp.value);
+    const mb = moistureBand(m);
+
+    const think = document.getElementById('thinkText').textContent || '';
+    const decision = els.decisionInput.value.trim() || '—';
+    const why = els.whyInput.value.trim() || '—';
+    const act = els.actSelect.value;
+    const result = els.resultInput.value.trim();
+
+    const time = new Date().toLocaleString('he-IL', { dateStyle:'medium', timeStyle:'short' });
+
+    const items = loadLog();
+    items.unshift({ time, moisture:m, light:l, temp:t, band:mb.band, think, decision, why, act, result });
+    saveLog(items);
+    els.resultInput.value = '';
+    renderLog();
+  });
+
+  els.clearLogBtn.addEventListener('click', () => {
+    localStorage.removeItem('dtddar_log');
+    renderLog();
+  });
+
+  // init
+  analyze();
+  renderLog();
+</script>
+</body>
+</html>
